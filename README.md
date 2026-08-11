@@ -80,10 +80,3 @@ t = 2s   tokens = 1 + 1 = 2   5 requests arrive   tokens = 2 -> 1 -> 0, then rej
 
 This allows short bursts (using saved-up tokens) while keeping the average rate at `r` per second over time.
 
-## Diagram source files
-
-The `diagrams` folder also contains the original `.excalidraw` scene file. Open it at excalidraw.com to view or edit.
-
-## Status
-
-Core shared-counter version in progress. Additional algorithms and async audit logging planned next.
