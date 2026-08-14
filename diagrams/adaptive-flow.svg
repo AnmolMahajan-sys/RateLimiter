@@ -1,0 +1,56 @@
+<svg width="1000" height="720" viewBox="0 0 1000 720" xmlns="http://www.w3.org/2000/svg" font-family="Segoe Print, Comic Sans MS, cursive">
+  <rect width="1000" height="720" fill="#ffffff"/>
+
+  <rect x="60" y="30" width="260" height="70" rx="10" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+  <text x="190" y="60" text-anchor="middle" font-size="16" fill="#1e1e1e">Gateway nodes</text>
+  <text x="190" y="82" text-anchor="middle" font-size="14" fill="#1e1e1e">(request + throttle events)</text>
+
+  <rect x="60" y="150" width="260" height="70" rx="10" fill="#ffc9c9" stroke="#1e1e1e" stroke-width="2"/>
+  <text x="190" y="180" text-anchor="middle" font-size="16" fill="#1e1e1e">Redis</text>
+  <text x="190" y="202" text-anchor="middle" font-size="14" fill="#1e1e1e">live counters per client</text>
+
+  <rect x="60" y="270" width="260" height="70" rx="10" fill="#d0bfff" stroke="#1e1e1e" stroke-width="2"/>
+  <text x="190" y="300" text-anchor="middle" font-size="16" fill="#1e1e1e">Kafka</text>
+  <text x="190" y="322" text-anchor="middle" font-size="14" fill="#1e1e1e">throttle + traffic audit log</text>
+
+  <rect x="400" y="150" width="260" height="90" rx="10" fill="#ffd8a8" stroke="#1e1e1e" stroke-width="2"/>
+  <text x="530" y="180" text-anchor="middle" font-size="16" fill="#1e1e1e">Metrics aggregator</text>
+  <text x="530" y="202" text-anchor="middle" font-size="14" fill="#1e1e1e">runs every 30s per client</text>
+  <text x="530" y="222" text-anchor="middle" font-size="14" fill="#1e1e1e">rate, errors, throttle %, latency</text>
+
+  <rect x="400" y="290" width="260" height="90" rx="10" fill="#a5d8ff" stroke="#1e1e1e" stroke-width="2"/>
+  <text x="530" y="320" text-anchor="middle" font-size="16" fill="#1e1e1e">Spring AI</text>
+  <text x="530" y="342" text-anchor="middle" font-size="14" fill="#1e1e1e">ChatClient with structured</text>
+  <text x="530" y="360" text-anchor="middle" font-size="14" fill="#1e1e1e">output (decision object)</text>
+
+  <rect x="740" y="290" width="220" height="90" rx="10" fill="#ffec99" stroke="#1e1e1e" stroke-width="2"/>
+  <text x="850" y="320" text-anchor="middle" font-size="15" fill="#1e1e1e">Decision</text>
+  <text x="850" y="342" text-anchor="middle" font-size="14" fill="#1e1e1e">TIGHTEN / RELAX</text>
+  <text x="850" y="360" text-anchor="middle" font-size="14" fill="#1e1e1e">/ NO_CHANGE + reason</text>
+
+  <rect x="400" y="450" width="260" height="70" rx="10" fill="#ffc9c9" stroke="#1e1e1e" stroke-width="2"/>
+  <text x="530" y="480" text-anchor="middle" font-size="16" fill="#1e1e1e">Redis</text>
+  <text x="530" y="502" text-anchor="middle" font-size="14" fill="#1e1e1e">updates that client's limit</text>
+
+  <rect x="400" y="560" width="260" height="90" rx="10" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+  <text x="530" y="590" text-anchor="middle" font-size="16" fill="#1e1e1e">Next requests</text>
+  <text x="530" y="612" text-anchor="middle" font-size="14" fill="#1e1e1e">from that client are checked</text>
+  <text x="530" y="632" text-anchor="middle" font-size="14" fill="#1e1e1e">against the new limit</text>
+
+  <line x1="190" y1="100" x2="190" y2="148" stroke="#1e1e1e" stroke-width="2" marker-end="url(#a1)"/>
+  <line x1="190" y1="220" x2="190" y2="268" stroke="#1e1e1e" stroke-width="2" marker-end="url(#a1)"/>
+  <line x1="320" y1="185" x2="398" y2="185" stroke="#1e1e1e" stroke-width="2" marker-end="url(#a1)"/>
+  <line x1="320" y1="305" x2="398" y2="305" stroke="#1e1e1e" stroke-width="2" marker-end="url(#a1)"/>
+  <line x1="530" y1="240" x2="530" y2="288" stroke="#1e1e1e" stroke-width="2" marker-end="url(#a1)"/>
+  <line x1="660" y1="335" x2="738" y2="335" stroke="#1e1e1e" stroke-width="2" marker-end="url(#a1)"/>
+  <line x1="530" y1="380" x2="530" y2="448" stroke="#1e1e1e" stroke-width="2" marker-end="url(#a1)"/>
+  <line x1="530" y1="520" x2="530" y2="558" stroke="#1e1e1e" stroke-width="2" marker-end="url(#a1)"/>
+
+  <text x="530" y="690" text-anchor="middle" font-size="15" fill="#495057">The LLM never sits in the request path — it only adjusts limits periodically, in the background</text>
+
+  <defs>
+    <marker id="a1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#1e1e1e"/>
+    </marker>
+  </defs>
+</svg>
