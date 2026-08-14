@@ -112,11 +112,3 @@ Output from the model (structured, not free text)
 The decision then updates that client's limit in Redis, and every request after that point is checked against the new value. The model is never called on the request path itself, so it never adds latency to an actual API call, it only adjusts the limit in the background.
 
 This turns the rate limiter from a fixed rulebook into something that reasons about traffic patterns, while keeping the actual request handling path just as fast as before.
-
-## Diagram source files
-
-The `diagrams` folder also contains the original `.excalidraw` scene file. Open it at excalidraw.com to view or edit.
-
-## Status
-
-Core shared-counter version in progress. Additional algorithms, async audit logging, and the Spring AI adaptive limiting phase planned next.
