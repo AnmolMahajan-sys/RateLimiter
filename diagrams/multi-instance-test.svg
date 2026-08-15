@@ -1,0 +1,46 @@
+<svg width="1000" height="520" viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg" font-family="Segoe Print, Comic Sans MS, cursive">
+  <rect width="1000" height="520" fill="#ffffff"/>
+
+  <rect x="60" y="30" width="280" height="60" rx="10" fill="#a5d8ff" stroke="#1e1e1e" stroke-width="2"/>
+  <text x="200" y="58" text-anchor="middle" font-size="16" fill="#1e1e1e">10 requests fired</text>
+  <text x="200" y="78" text-anchor="middle" font-size="14" fill="#1e1e1e">concurrently, spread across ports</text>
+
+  <rect x="60" y="150" width="240" height="60" rx="10" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+  <text x="180" y="178" text-anchor="middle" font-size="16" fill="#1e1e1e">Instance A</text>
+  <text x="180" y="198" text-anchor="middle" font-size="14" fill="#1e1e1e">localhost:8081</text>
+
+  <rect x="380" y="150" width="240" height="60" rx="10" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+  <text x="500" y="178" text-anchor="middle" font-size="16" fill="#1e1e1e">Instance B</text>
+  <text x="500" y="198" text-anchor="middle" font-size="14" fill="#1e1e1e">localhost:8082</text>
+
+  <rect x="700" y="150" width="240" height="60" rx="10" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+  <text x="820" y="178" text-anchor="middle" font-size="16" fill="#1e1e1e">Instance C</text>
+  <text x="820" y="198" text-anchor="middle" font-size="14" fill="#1e1e1e">localhost:8083</text>
+
+  <text x="500" y="255" text-anchor="middle" font-size="14" fill="#495057">three separate JVM processes, no shared memory between them</text>
+
+  <rect x="380" y="280" width="240" height="70" rx="10" fill="#ffc9c9" stroke="#1e1e1e" stroke-width="2"/>
+  <text x="500" y="310" text-anchor="middle" font-size="16" fill="#1e1e1e">Redis</text>
+  <text x="500" y="330" text-anchor="middle" font-size="14" fill="#1e1e1e">one shared counter</text>
+
+  <line x1="200" y1="90" x2="200" y2="148" stroke="#1e1e1e" stroke-width="2" marker-end="url(#am)"/>
+  <line x1="300" y1="90" x2="500" y2="148" stroke="#1e1e1e" stroke-width="2" marker-end="url(#am)"/>
+  <line x1="340" y1="90" x2="820" y2="148" stroke="#1e1e1e" stroke-width="2" marker-end="url(#am)"/>
+
+  <line x1="200" y1="270" x2="440" y2="278" stroke="#1e1e1e" stroke-width="2" marker-end="url(#am)"/>
+  <line x1="500" y1="270" x2="500" y2="278" stroke="#1e1e1e" stroke-width="2" marker-end="url(#am)"/>
+  <line x1="820" y1="270" x2="580" y2="278" stroke="#1e1e1e" stroke-width="2" marker-end="url(#am)"/>
+
+  <rect x="300" y="400" width="400" height="90" rx="10" fill="#ffec99" stroke="#2b8a3e" stroke-width="2"/>
+  <text x="500" y="432" text-anchor="middle" font-size="17" fill="#2b8a3e" font-weight="bold">Result: 5 allowed, 5 blocked</text>
+  <text x="500" y="456" text-anchor="middle" font-size="14" fill="#1e1e1e">total across all three instances combined</text>
+  <text x="500" y="476" text-anchor="middle" font-size="14" fill="#1e1e1e">not 15, not per-instance, exactly the configured limit</text>
+
+  <line x1="500" y1="350" x2="500" y2="398" stroke="#1e1e1e" stroke-width="2" marker-end="url(#am)"/>
+
+  <defs>
+    <marker id="am" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#1e1e1e"/>
+    </marker>
+  </defs>
+</svg>

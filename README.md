@@ -55,6 +55,31 @@ Configured limit = 5
 
 ![Comparison](diagrams/comparison.png)
 
+## Proof: tested across real, separate server instances
+
+The theory above was verified with an actual multi-instance test, not just reasoned through. Three separate instances of this application were built into one jar and run as three independent processes on three different ports, all connecting to the same Redis container.
+
+![Multi-instance test](diagrams/multi-instance-test.png)
+
+```
+Setup
+  capacity            = 5
+  three instances     = localhost:8081, localhost:8082, localhost:8083
+  each instance       = a separate JVM process, started from the same jar
+  shared state        = one Redis container, same host and port for all three
+
+Test
+  10 requests fired concurrently, spread across all three ports
+  (a mix hitting 8081, 8082, and 8083, not sent to one server at a time)
+
+Result
+  5 requests allowed
+  5 requests rejected
+  total across all three instances combined, not per instance
+```
+
+If each instance were tracking its own separate count, the correct-looking but wrong result would have been up to 15 allowed (5 per instance, since none of them would know about the other two). Getting exactly 5 confirms the limit is enforced correctly across the whole group, which is the actual point of a distributed rate limiter.
+
 ## Request flow
 
 ![Request flow](diagrams/flow.png)
