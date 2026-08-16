@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -18,6 +19,9 @@ public class RateLimitFilter implements Filter {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private KafkaTemplate<String, ThrottleEvent>  kafkaTemplate;
 
     @Value("${ratelimiter.algorithm}")
     private String algorithmName;
@@ -44,6 +48,10 @@ public class RateLimitFilter implements Filter {
             HttpServletResponse httpResponse=(HttpServletResponse)response;
             httpResponse.setStatus(429);
             httpResponse.getWriter().write("Too many requests!");
+
+            ThrottleEvent event = new ThrottleEvent(clientId, algorithmName, System.currentTimeMillis());
+            kafkaTemplate.send("throttle-events", event);
+
             return;
         }
         chain.doFilter(request,response);
