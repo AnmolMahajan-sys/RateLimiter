@@ -105,6 +105,32 @@ t = 2s   tokens = 1 + 1 = 2   5 requests arrive   tokens = 2 -> 1 -> 0, then rej
 
 This allows short bursts (using saved-up tokens) while keeping the average rate at `r` per second over time.
 
+## Benchmarks: all four algorithms under real load
+
+The project implements four rate limiting algorithms, each as an atomic Redis Lua script: Token Bucket, Leaky Bucket, Sliding Window Log, and Sliding Window Counter. All four were load tested with the same setup, so the numbers below are directly comparable.
+
+```
+Test setup
+  tool          k6
+  virtual users 10, running continuously
+  duration      15 seconds per algorithm
+  target        a single endpoint protected by the rate limiter
+  capacity      5 requests, refill/leak rate or window sized to match
+```
+
+| Algorithm | Requests/sec | Avg latency | Requests allowed |
+|---|---|---|---|
+| Token Bucket | ~4,099 | 2.33ms | 19 |
+| Leaky Bucket | ~3,854 | 2.48ms | 20 |
+| Sliding Window Log | ~2,663 | 3.58ms | 40 |
+| Sliding Window Counter | ~2,069 | 4.61ms | 5 |
+
+Token Bucket and Leaky Bucket perform almost identically, which makes sense: both track just two numbers per client in Redis and do simple arithmetic on each request.
+
+Sliding Window Log is noticeably slower, around 35% less throughput than Token Bucket. This is the real cost of its accuracy: it stores every individual request timestamp in a Redis sorted set, and every check has to prune old entries and count what remains, which is inherently more expensive than updating two scalar values.
+
+Sliding Window Counter shows the lowest throughput and highest latency here, along with an anomaly worth being upfront about: all 5 allowed requests in this run had identical, unusually high latency (647.82ms). The likely cause is a known simplification in this implementation — a fully correct sliding window counter rotates its "current window" count into "previous window" at fixed boundaries, and this version does not implement that rotation. Under sustained load, that gap can produce unexpected contention around window transitions. This is flagged here rather than hidden, since it's a real limitation of the current implementation, not a property of the algorithm itself.
+
 ## Adaptive rate limiting with Spring AI
 
 Fixed limits treat every client the same, which is not always correct. A client with a sudden but legitimate burst of traffic gets throttled the same way a bot or an abusive client would. This phase adds a background process that uses Spring AI to look at each client's recent behavior and adjust their limit accordingly, instead of leaving it fixed forever.
