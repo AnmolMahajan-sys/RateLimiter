@@ -20,3 +20,15 @@ services:
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  postgres:
+    image: postgres:16
+    container_name: postgres-ratelimiter
+    ports:
+        - "5432:5432"
+    environment:
+        POSTGRES_DB: distrilimit
+        POSTGRES_USER: distrilimit
+        POSTGRES_PASSWORD: distrilimit
+        TZ: UTC
+        PGTZ: UTC

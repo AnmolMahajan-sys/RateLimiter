@@ -1,6 +1,15 @@
 package com.anmol.distrilimit;
 
+import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+@Entity
 public class ThrottleEvent {
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Long id;
+
     private String clientId;
     private String algorithm;
     private long timestamp;
@@ -12,6 +21,13 @@ public class ThrottleEvent {
         this.clientId = clientId;
         this.algorithm = algorithm;
         this.timestamp = timestamp;
+    }
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getClientId() {
