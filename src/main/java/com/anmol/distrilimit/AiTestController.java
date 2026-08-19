@@ -12,7 +12,7 @@ public class AiTestController {
 
     public AiTestController(ChatClient.Builder chatClientBuilder, AdaptiveLimitService adaptiveLimitService) {
         this.chatClient = chatClientBuilder.build();
-        this.adaptiveLimitService = adaptiveLimitService.;
+        this.adaptiveLimitService = adaptiveLimitService;
     }
 
     @GetMapping("/ai-test")
@@ -23,8 +23,13 @@ public class AiTestController {
                 .content();
     }
 
-    @GetMapping("/ai-decision-test")
-    public RateLimitDecision decisionTest(){
-        return adaptiveLimitService("test-client",120,45,0,5);
+    @GetMapping("/ai-decision-test-a")
+    public RateLimitDecision decisionTestA() {
+        return adaptiveLimitService.decideWithPromptConstraint("test-client", 120, 45.0, 5);
+    }
+
+    @GetMapping("/ai-decision-test-b")
+    public RateLimitDecision decisionTestB() {
+        return adaptiveLimitService.decideWithCodeComputation("test-client", 120, 45.0, 5);
     }
 }
